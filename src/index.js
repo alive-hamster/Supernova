@@ -3,17 +3,15 @@ import express from "express";
 import { createServer } from "node:http";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { hostname } from "node:os";
-import { websitePath } from 'supernova';
+import { front } from 'front';
+import { games } from 'games';
 
 const bare = createBareServer("/bare/");
 const app = express();
 
-app.use(express.static(websitePath));
+app.use(express.static(front));
+app.use(express.static(games));
 app.use("/uv/", express.static(uvPath));
-
-app.get('/', function(req, res) {
-  res.sendFile(websitePath, "index.html");
-});
 
 // Error for everything else
 app.get('*', function(req, res) {
