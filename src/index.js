@@ -1,17 +1,22 @@
 import { createBareServer } from "@tomphttp/bare-server-node";
 import express from "express";
+import proxy from 'express-http-proxy';
 import { createServer } from "node:http";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { hostname } from "node:os";
 import { front } from 'front';
-import { games } from 'games';
 
 const bare = createBareServer("/bare/");
 const app = express();
 
 app.use(express.static(front));
-app.use(express.static(games));
 app.use("/uv/", express.static(uvPath));
+app.use(
+	'/cdn',
+	proxy(`https://3kh0-assets.silvereen.net/3kh0-assets/`, {
+		proxyReqPathResolver: (req) => `/3kh0-assets/${req.url}`,
+	})
+);
 
 // Error for everything else
 app.get('*', function(req, res) {
