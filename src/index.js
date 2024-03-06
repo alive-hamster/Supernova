@@ -13,7 +13,7 @@ app.use(express.static(front));
 app.use("/uv/", express.static(uvPath));
 app.use(
 	'/cdn',
-	proxy(`https://3kh0-assets.silvereen.net/3kh0-assets/`, {
+	proxy(`https://nxweb.xyz/3kh0-assets/`, {
 		proxyReqPathResolver: (req) => `/3kh0-assets/${req.url}`,
 	})
 );
