@@ -3,6 +3,7 @@ import express from "express";
 import proxy from 'express-http-proxy';
 import { createServer } from "node:http";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { dynamicPath } from "@nebula-services/dynamic";
 import { hostname } from "node:os";
 import { front } from 'front';
 
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.static(front));
 app.use("/uv/", express.static(uvPath));
+app.use("/dynamic/", express.static(dynamicPath));
 app.use(
 	'/cdn',
 	proxy(`https://nxweb.xyz/3kh0-assets/`, {
